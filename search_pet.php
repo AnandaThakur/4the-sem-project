@@ -37,10 +37,10 @@ include('./functions/common_function.php');
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="display_all.php">Pets</a>
+          <a class="nav-link" href="#">Pets</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Register</a>
@@ -49,13 +49,13 @@ include('./functions/common_function.php');
           <a class="nav-link" href="#">Contacts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sup><?php cart_item();?></sup></a>
+          <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sup>1</sup></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Total Price:<?php total_cart_price(); ?>/-</a>
         </li>
       </ul>
-      <form class="d-flex" action="search_pet.php" method="get">
+      <form class="d-flex" action="" method="get">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
        <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_pet">
       </form>
@@ -66,8 +66,8 @@ include('./functions/common_function.php');
 <!--calling cart function-->
 <?php
 cart();
-
 ?>
+
 
 <!--second child-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -96,12 +96,9 @@ cart();
 <!--Fetching pets-->
 <?php
 //calling functions
-getpets();
+search_pets();
 get_unique_categories();
 get_unique_breeds();
-// getIPAddress();
-// $ip = getIPAddress();  
-// echo 'User Real IP Address - '.$ip; 
 
 ?>
 
@@ -158,11 +155,9 @@ getbreeds();
 
 
 <!--last child-->
-<!--Include footer-->
-<?php
-include("./includes/footer.php")
-?>
-
+<div class="bg-info p-3 text-center">
+    <p>All rights reserved ©2024 </p>
+</div>
 </div>
 
 
