@@ -93,17 +93,7 @@ cart();
     <div class="row">
         <form action="" method="post" >
         <table class="table table-bordered text-center">
-            <thead>
-                <tr>
-                    <th>Pet Name</th>
-                    <th>Pet Image</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
-                    <th>Remove</th>
-                    <th colspan="2">Operations</th>
-                </tr>
-            </thead>
-            <tbody>
+           
                 <!--php code for showing dynamic data-->
                 <?php
               
@@ -111,6 +101,20 @@ cart();
                 $total_price=0;
                 $cart_query="select * from `cart_details` where ip_address='$get_ip_address'";
                 $result=mysqli_query($con,$cart_query);
+                $result_count=mysqli_num_rows($result);
+                if($result_count> 0){
+                  echo" <thead>
+                  <tr>
+                      <th>Pet Name</th>
+                      <th>Pet Image</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                      <th>Remove</th>
+                      <th colspan='2'>Operations</th>
+                  </tr>
+              </thead>
+              <tbody>";
+
                 while($row=mysqli_fetch_array($result)){
                   $pet_id=$row['pet_id'];
                   $select_pets="select * from `pets` where pet_id='$pet_id'";
@@ -127,7 +131,7 @@ cart();
                 ?>
                 <tr>
                     <td><?php  echo $pet_title ?></td>
-                    <td><img src="./admin_arera/pet_images/<?php echo $pet_image1?>" alt=""
+                    <td><img src="./admin_area/pet_images/<?php echo $pet_image1?>" alt=""
                     class="cart_img"></td>
                     <td><input type="text" name="qty" id="" class="form-input w-50" ></td>
                     <?php
@@ -142,33 +146,72 @@ cart();
                     ?>
 
                     <td><?php echo $price_table ?>/-</td>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" name="removeitem[]" value="<?php echo 
+                    $pet_id ?>"></td>
                     <td>
                     
                         <!-- <button class="bg-info px-3 py-2 border-0 " >Update</button> -->
                         <input type="submit" value="Update cart" class="bg-info px-3 py-2 border-0"
                         name="update_cart">
                         
-                        <button class="bg-info px-3 py-2 border-0 ">Remove</button>
+                        <!-- <button class="bg-info px-3 py-2 border-0 ">Remove</button> -->
+                        <input type="submit" value="Remove cart" class="bg-info px-3 py-2 border-0"
+                        name="remove_cart">
                     </td>
                 </tr>
 
-                <?php }}
+                <?php }}}
 
+                else{
+                  echo "<h2 class='text-center text-danger'>Cart is empty</h2>";
+                }
 
                 ?>
             </tbody>
         </table>
         <!--Total-->
         <div class="d-flex mb-3">
-            <h4 class="px-3">Total:<strong class="text-info"><?php echo $total_price ?>/-</strong></h4>
-            <a href="index.php"><button class="bg-info px-3 py-2 border-0 mx-3">Continue more</button></a>
-            <a href="#"><button class="bg-secondary px-3 py-2 border-0 text-light mx-3">Checkout</button></a>
-        </div>
+        <?php
+                $get_ip_address = getIPAddress(); 
+                $cart_query="select * from `cart_details` where ip_address='$get_ip_address'";
+                $result=mysqli_query($con,$cart_query);
+                $result_count=mysqli_num_rows($result);
+                if($result_count> 0){
+                  echo" <h4 class='px-3'>Total:<strong class='text-info'> $total_price /-</strong></h4>
+                  <input type='submit' value='Continue Shopping' class='bg-info px-3 py-2 border-0'
+                        name='continue_shopping'>
+                  <button class='bg-secondary px-3 py-2 border-0 text-light mx-3'><a href='./users_area/checkout.php'class='text-light text-decoration-none'>Checkout</a></button>";
+                }else{
+                  echo "<input type='submit' value='Continue Shopping' class='bg-info px-3 py-2 border-0'
+                  name='continue_shopping'>";
+                }
+                if(isset($_POST['continue_shopping'])){
+                  echo"<script>window.open('index.php','_self')</script>";
+                }
+                  ?>
+              </div>
 
     </div>
 </div>
 </form>
+
+<!--function to remove items  -->
+<?php
+function remove_cart_item(){
+  global $con;
+  if(isset($_POST['remove_cart'])){
+foreach($_POST['removeitem'] as $remove_id){
+echo $remove_id;
+$delete_query="Delete  from `cart_details` where pet_id=$remove_id";
+$run_delete=mysqli_query($con,$delete_query);
+if($run_delete){
+  echo "<script>window.open*('cart.php','_self)</script>";
+}
+}
+}
+}
+echo $remove_item=remove_cart_item();
+?>
 
 
 <!--last child-->

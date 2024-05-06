@@ -1,6 +1,6 @@
 <?php
 //including connect file
-include('./includes/connect.php');
+// include('./includes/connect.php');
 //getting pets
 function getpets(){
   global $con;

@@ -1,8 +1,8 @@
 
 <!--connect files-->
 <?php
-include('./includes/connect.php');
-include('./functions/common_function.php');
+include('../includes/connect.php');
+
 
 
 
@@ -14,7 +14,7 @@ include('./functions/common_function.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Pets Website</title>
+    <title>Adopt Pets Website- Checkout Page</title>
     <!--bootstrap css link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!--font awesome link-->
@@ -37,10 +37,10 @@ include('./functions/common_function.php');
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pets</a>
+          <a class="nav-link" href="display_all.php">Pets</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Register</a>
@@ -48,25 +48,15 @@ include('./functions/common_function.php');
         <li class="nav-item">
           <a class="nav-link" href="#">Contacts</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sup>1</sup></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Total Price:<?php total_cart_price(); ?>/-</a>
-        </li>
+       
       </ul>
-      <form class="d-flex" action="" method="get">
+      <form class="d-flex" action="search_pet.php" method="get">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
        <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_pet">
       </form>
     </div>
   </div>
 </nav>
-
-<!--calling cart function-->
-<?php
-cart();
-?>
 
 
 <!--second child-->
@@ -76,7 +66,7 @@ cart();
           <a class="nav-link" href="#">welcome Guest</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./users_area/user_login.php">Login</a>
+          <a class="nav-link" href="#">Login</a>
         </li>
 </ul>
 </nav>
@@ -87,67 +77,23 @@ cart();
     <h3 class="text-center">Pets List</h3>
     <p class="text-center">Get Your Pet Now</p>
 </div>
-
-<!--fourth child-->
+<!-- fourth child -->
 <div class="row px-1">
-  <div class="col-md-10">
-      <!--Pets-->
-<div class="row">
-<!--Fetching pets-->
-<?php
-//calling functions
-search_pets();
-get_unique_categories();
-get_unique_breeds();
-
-?>
-
-<!--row end-->
-</div>
-<!--Col end-->
-</div>
-<!-- sideNav-->
-  <div class="col-md-2 bg-secondary p-0">
-    <!--types to be displayed-->
-     <ul class="navbar-nav me-auto text-center">
-      <li class="nav-pet bg-info">
-      <a href="#" class="nav-link text-light"><h4>Categories</h4></a>
-      </li>
-      
-  <?php
-$select_categories="select * from `categories`";
-$result_categories=mysqli_query($con,$select_categories);
-//$row_data=mysqli_fetch_assoc($result_breeds);
-//echo $row_data['breed_title'];
-while($row_data=mysqli_fetch_assoc($result_categories)){
-  $category_title=$row_data['category_title'];
-  $category_id=$row_data['category_id'];
-  echo"
-  <li class='nav-pet ''>
-    <a href='index.php?category=$category_id' class='nav-link text-light'> $category_title</a>
-  </li>";
+<div class="col-md-12">
+<div clas="row">
+    <?php
+if(!isset($_SESSION['username'])){
+    include('../users_area/user_login.php');
+}else{
+    include('payment.php');
 }
 ?>
-      
-     </ul>
-
-    <!--Categories to be displayed-->
-
-     <ul class="navbar-nav me-auto text-center">
-      <li class="nav-pet bg-info">
-      <a href="#" class="nav-link text-light"><h4>We Have</h4></a>
-      </li>
-
-  <?php
-getbreeds();
-?>
-       
-     
-     </ul>
-
-
-  </div>
 </div>
+
+<!-- col end -->
+</div>
+</div>
+
 
 
 
@@ -155,9 +101,11 @@ getbreeds();
 
 
 <!--last child-->
-<div class="bg-info p-3 text-center">
-    <p>All rights reserved ©2024 </p>
-</div>
+<!--Include footer-->
+<?php
+include("../includes/footer.php")
+?>
+
 </div>
 
 

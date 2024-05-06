@@ -6,18 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    
-
-<?php
-$con=mysqli_connect('localhost','root','','aanand');
-if(!$con){
-    // die(mysqli_error($con));
-   
-}
-
-
-
-?>
-
+    <h1>Payment</h1>
 </body>
 </html>
