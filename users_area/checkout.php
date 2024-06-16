@@ -21,6 +21,12 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!--css file-->
 <link rel="stylesheet" href="style.css">
+<style>
+  .logo{
+    width:3%;
+    height:3%;
+  }
+</style>
 
 </head>
 <body>
@@ -30,7 +36,7 @@ session_start();
     <!--first child-->
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
   <div class="container-fluid">
-    <img src="./images/real.png" alt="" class="logo">
+    <img src="../images/real.png" alt="" class="logo">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

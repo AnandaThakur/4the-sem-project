@@ -1,8 +1,8 @@
 
 <!--connect files-->
 <?php
-include('./includes/connect.php');
-include('./functions/common_function.php');
+include('../includes/connect.php');
+include('../functions/common_function.php');
 session_start();
 
 
@@ -14,13 +14,26 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Pets Website</title>
+    <title>Welcome <?php echo $_SESSION['username']?></title>
     <!--bootstrap css link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!--font awesome link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!--css file-->
+
+    <!--css file-->
 <link rel="stylesheet" href="style.css">
+<style>
+  body{
+    overflow-x:hidden;
+  }
+  .profile_img{
+    width:90%;
+    margin:auto;
+    display:block;
+   /* height:100%; */
+    object-fit:contain;
+  }
+  </style>
 
 </head>
 <body>
@@ -37,25 +50,25 @@ session_start();
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="display_all.php">Pets</a>
+          <a class="nav-link" href="../display_all.php">Pets</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./users_area/user_registration.php">Register</a>
+          <a class="nav-link" href="profile.php">My Account</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Contacts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sup>1</sup></a>
+          <a class="nav-link" href="../cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sup><?php cart_item();?></sup></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Total Price:<?php total_cart_price(); ?>/-</a>
         </li>
       </ul>
-      <form class="d-flex" action="" method="get">
+      <form class="d-flex" action="../search_pet.php" method="get">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
        <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_pet">
       </form>
@@ -66,26 +79,25 @@ session_start();
 <!--calling cart function-->
 <?php
 cart();
-?>
 
+?>
 
 <!--second child-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
 <ul class="navbar-nav me-auto">
 
-        <?php
-          if(!isset($_SESSION['username'])){
-            echo"<li class='nav-item'>
-            <a class='nav-link' href='#'>welcome Guest</a>
-          </li>";
-          }else{
-            echo"<li class='nav-item'>
-            <a class='nav-link' href=''>Welcome ".$_SESSION['username']."</a>
-          </li>";
-        }
+      <?php
+     if(!isset($_SESSION['username'])){
+      echo"<li class='nav-item'>
+      <a class='nav-link' href='#'>welcome Guest</a>
+    </li>";
+    }else{
+      echo"<li class='nav-item'>
+      <a class='nav-link' href=''>Welcome ".$_SESSION['username']."</a>
+    </li>";
+  }
 
-
-        if(!isset($_SESSION['username'])){
+       if(!isset($_SESSION['username'])){
         echo" <li class='nav-item'>
         <a class='nav-link' href='./users_area/user_login.php'>Login</a>
       </li>";
@@ -94,8 +106,9 @@ cart();
         <a class='nav-link' href='./users_area/logout.php'>Logout</a>
       </li>";
     }
-    ?>
+?>
 </ul>
+       
 </nav>
 
         
@@ -104,77 +117,57 @@ cart();
     <h3 class="text-center">Pets List</h3>
     <p class="text-center">Get Your Pet Now</p>
 </div>
+<!-- fourth child -->
+ <div class="row">
+  <div class="col-md-2">
+<ul class="navbar-nav bg-secondary text-center" style="height:100vh">
+<li class="nav-item bg-info">
+          <a class="nav-link text-light" href="#"><h4>Your Profile</h4></a>
+        </li>
+      <?php
+      $username=$_SESSION['username'];
+      $user_image="select * from `user_table` where username='$username'";
+      $result_iamge=mysqli_query($con,$user_image);
+      $row_image=mysqli_fetch_array($result_iamge);
+      $user_image=$row_image['user_image'];
+      echo" <li class='nav-item bg-secondary'>
+      <img src='../users_area/user_images/$user_image' class='profile_img my-4' alt=''>  
+      </li>'";
 
-<!--fourth child-->
-<div class="row px-1">
-  <div class="col-md-10">
-      <!--Pets-->
-<div class="row">
-<!--Fetching pets-->
-<?php
-//calling functions
-search_pets();
-get_unique_categories();
-get_unique_breeds();
-
-?>
-
-<!--row end-->
-</div>
-<!--Col end-->
-</div>
-<!-- sideNav-->
-  <div class="col-md-2 bg-secondary p-0">
-    <!--types to be displayed-->
-     <ul class="navbar-nav me-auto text-center">
-      <li class="nav-pet bg-info">
-      <a href="#" class="nav-link text-light"><h4>Categories</h4></a>
-      </li>
-      
-  <?php
-$select_categories="select * from `categories`";
-$result_categories=mysqli_query($con,$select_categories);
-//$row_data=mysqli_fetch_assoc($result_breeds);
-//echo $row_data['breed_title'];
-while($row_data=mysqli_fetch_assoc($result_categories)){
-  $category_title=$row_data['category_title'];
-  $category_id=$row_data['category_id'];
-  echo"
-  <li class='nav-pet ''>
-    <a href='index.php?category=$category_id' class='nav-link text-light'> $category_title</a>
-  </li>";
-}
-?>
-      
-     </ul>
-
-    <!--Categories to be displayed-->
-
-     <ul class="navbar-nav me-auto text-center">
-      <li class="nav-pet bg-info">
-      <a href="#" class="nav-link text-light"><h4>We Have</h4></a>
-      </li>
-
-  <?php
-getbreeds();
-?>
-       
+      ?>
      
-     </ul>
 
-
-  </div>
+      <li class="nav-item ">
+          <a class="nav-link text-light" href="profile.php">Pending Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="profile.php?edit_account">Edit account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="profile.php?my_orders">My orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="profile.php?delete_account">Delete account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="../users_area/logout.php">Logout</a>
+        </li>
+</ul>
 </div>
-
-
+  <div class="col-md-10">
+<?php get_user_order_details();?>
+  </div>
+ </div>
 
 
 
 
 <!--last child-->
-<div class="bg-info p-3 text-center">
-    <p>All rights reserved ©2024 </p>
-</div>
+<!--Include footer-->
+<?php
+include("../includes/footer.php")
+?>
+
 </div>
 
 
