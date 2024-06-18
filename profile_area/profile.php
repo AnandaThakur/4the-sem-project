@@ -33,6 +33,11 @@ session_start();
    /* height:100%; */
     object-fit:contain;
   }
+  .edit_image{
+    height:100px;
+    width:100px;
+  
+  }
   </style>
 
 </head>
@@ -103,7 +108,7 @@ cart();
       </li>";
       }else{
         echo"<li class='nav-item'>
-        <a class='nav-link' href='./users_area/logout.php'>Logout</a>
+        <a class='nav-link' href='../users_area/logout.php'>Logout</a>
       </li>";
     }
 ?>
@@ -125,17 +130,17 @@ cart();
           <a class="nav-link text-light" href="#"><h4>Your Profile</h4></a>
         </li>
       <?php
-      $username=$_SESSION['username'];
-      $user_image="select * from `user_table` where username='$username'";
-      $result_iamge=mysqli_query($con,$user_image);
-      $row_image=mysqli_fetch_array($result_iamge);
+     $username=$_SESSION['username'];
+      $user_image="Select * from `user_table` where username='$username'";
+      $user_image=mysqli_query($con,$user_image);
+      $row_image=mysqli_fetch_array($user_image);
       $user_image=$row_image['user_image'];
       echo" <li class='nav-item bg-secondary'>
       <img src='../users_area/user_images/$user_image' class='profile_img my-4' alt=''>  
-      </li>'";
+      </li>";
 
       ?>
-     
+      
 
       <li class="nav-item ">
           <a class="nav-link text-light" href="profile.php">Pending Orders</a>
@@ -154,8 +159,18 @@ cart();
         </li>
 </ul>
 </div>
-  <div class="col-md-10">
-<?php get_user_order_details();?>
+  <div class="col-md-10 text-center">
+<?php get_user_order_details();
+if(isset($_GET['edit_account'])){
+ include('../users_area/edit_account.php');
+}
+if(isset($_GET['my_orders'])){
+  include('../users_area/user_orders.php');
+ }
+
+
+
+?> 
   </div>
  </div>
 
