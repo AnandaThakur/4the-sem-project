@@ -167,6 +167,9 @@ if(isset($_GET['edit_account'])){
 if(isset($_GET['my_orders'])){
   include('../users_area/user_orders.php');
  }
+ if(isset($_GET['delete_account'])){
+  include('../users_area/delete_account.php');
+ }
 
 
 

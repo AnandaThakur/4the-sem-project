@@ -44,7 +44,7 @@ values($user_id,$subtotal,$invoice_number,$count_products,NOW(),'$status')";
 $result_query=mysqli_query($con,$insert_orders);
 if($result_query){
     echo" <script>alert('Orders are submitted successfully') </script>";
-    echo" <script>window.open('../user_profile/profile.php','_self') </script>";
+    echo" <script>window.open('../profile_area/profile.php','_self') </script>";
 }
 //orders pending
 $insert_pending_orders="insert into `orders_pending` (user_id,invoice_number,pet_id,quantity,order_status)
