@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 04:22 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 18, 2024 at 03:52 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -57,6 +57,14 @@ CREATE TABLE `cart_details` (
   `quantity` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cart_details`
+--
+
+INSERT INTO `cart_details` (`pet_id`, `ip_address`, `quantity`) VALUES
+(1, '::1', 0),
+(2, '::1', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -102,9 +110,11 @@ CREATE TABLE `orders_pending` (
 --
 
 INSERT INTO `orders_pending` (`order_id`, `user_id`, `invoice_number`, `pet_id`, `quantity`, `order_status`) VALUES
-(1, 17, 1668495022, 7, 1, 'pending'),
-(2, 17, 1538098677, 4, 1, 'pending'),
-(3, 17, 401646811, 4, 2, 'pending');
+(1, 1, 1463026613, 4, 1, 'pending'),
+(2, 1, 291599742, 2, 1, 'pending'),
+(3, 1, 55962243, 1, 1, 'pending'),
+(4, 1, 930688335, 4, 1, 'pending'),
+(5, 1, 1196891058, 2, 1, 'pending');
 
 -- --------------------------------------------------------
 
@@ -132,10 +142,10 @@ CREATE TABLE `pets` (
 --
 
 INSERT INTO `pets` (`pet_id`, `pet_title`, `pet_description`, `pet_keywords`, `category_id`, `breed_id`, `pet_image1`, `pet_image2`, `pet_image3`, `pet_price`, `date`, `status`) VALUES
-(2, 'parrot', 'Parrot can talk words that u say', 'Parrot, Bird', 3, 3, 'WhatsApp Image 2024-04-30 at 09.08.07_37666570.jpg', 'WhatsApp Image 2024-04-30 at 09.08.07_05e9e430.jpg', 'WhatsApp Image 2024-04-30 at 09.08.05_3264677a.jpg', '850', '2024-05-02 06:11:46', 'true'),
-(4, 'Cat', 'cat is a loving animal', 'bird, good bird, parrot, green', 3, 3, 'IMG-20240430-WA0009.jpg', 'IMG-20240430-WA0001.jpg', 'IMG-20240430-WA0018.jpg', '499', '2024-05-03 02:24:27', 'true'),
-(5, 'cat', 'Cat is very lovely. ', 'cat, lovely cat, white cat', 2, 3, 'IMG-20240430-WA0002.jpg', 'IMG-20240430-WA0000.jpg', 'IMG-20240430-WA0013.jpg', '899', '2024-05-03 02:51:50', 'true'),
-(7, 'bird', 'parrot is a very charming.', 'bird', 4, 3, 'IMG-20240430-WA0021.jpg', 'IMG-20240430-WA0000.jpg', 'IMG-20240430-WA0019.jpg', '500', '2024-05-09 04:29:38', 'true');
+(1, 'dog', 'good dog ', 'good dog loyal dog ', 1, 1, 'whiteorangedog.jpg', 'brownblackgerman.jpg', 'smallwhitedog.jpg', '1000', '2024-06-17 05:40:55', 'true'),
+(2, 'white dog', 'it is very charming dog.', 'dog white dog ', 1, 2, 'whitedog.jpeg', 'whitedog1.jpeg', 'whitedog3.jpeg', '2000', '2024-06-17 05:42:09', 'true'),
+(3, 'parrot', 'talking parrot', 'green white gray parrot', 3, 3, 'lightparrot.jpg', 'darkparrot.jpg', 'lightparrot.jpg', '3000', '2024-06-17 05:43:50', 'true'),
+(4, 'fish', 'colorful fishes small in size', 'fish colorful', 4, 3, 'fish.jpg', 'colorfish.jpg', 'goldenfish.jpg', '1500', '2024-06-17 05:45:02', 'true');
 
 -- --------------------------------------------------------
 
@@ -158,9 +168,39 @@ CREATE TABLE `user_orders` (
 --
 
 INSERT INTO `user_orders` (`order_id`, `user_id`, `amount_due`, `invoice_number`, `total_pets`, `order_date`, `order_status`) VALUES
-(1, 17, 500, 1668495022, 1, '2024-05-08 14:20:55', 'pending'),
-(2, 17, 499, 1538098677, 1, '2024-05-09 02:02:50', 'pending'),
-(3, 17, 998, 401646811, 1, '2024-05-09 04:35:16', 'pending');
+(1, 1, 4500, 1898020122, 2, '2024-06-17 05:47:21', 'pending'),
+(2, 1, 3000, 1444982319, 1, '2024-06-17 15:35:55', 'pending'),
+(3, 2, 3000, 182739040, 1, '2024-06-18 13:09:34', 'complete'),
+(4, 1, 3500, 1463026613, 2, '2024-06-18 01:11:03', 'pending'),
+(5, 1, 2000, 291599742, 1, '2024-06-18 02:58:54', 'pending'),
+(6, 1, 1000, 55962243, 1, '2024-06-18 11:46:10', 'pending'),
+(7, 1, 1500, 930688335, 1, '2024-06-18 11:46:48', 'pending'),
+(8, 1, 3000, 1196891058, 2, '2024-06-18 13:38:35', 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_payments`
+--
+
+CREATE TABLE `user_payments` (
+  `payment_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `invoice_number` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `payment_mode` varchar(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_payments`
+--
+
+INSERT INTO `user_payments` (`payment_id`, `order_id`, `invoice_number`, `amount`, `payment_mode`, `date`) VALUES
+(1, 3, 182739040, 3000, 'Cash on delivery', '2024-06-18 13:09:34'),
+(2, 3, 182739040, 3000, 'Khalti', '2024-06-18 13:09:51'),
+(3, 3, 182739040, 3000, 'Khalti', '2024-06-18 13:35:28'),
+(4, 3, 182739040, 3000, 'Khalti', '2024-06-18 13:36:20');
 
 -- --------------------------------------------------------
 
@@ -184,9 +224,8 @@ CREATE TABLE `user_table` (
 --
 
 INSERT INTO `user_table` (`user_id`, `username`, `user_email`, `user_password`, `user_image`, `user_ip`, `user_address`, `user_mobile`) VALUES
-(17, 'sonam', 'sonam@gmail.com', '$2y$10$ZMIljxkbnT0iOKvh6l6IAeD1JQKI4AYykzczbvwqAthAiYs4H//dW', 'IMG-20240430-WA0005.jpg', '::1', ' basant', '8745896547'),
-(18, 'saayam', 'saayam@gmail.com', '$2y$10$NbKLbbW6FpHIbqUt6eE81OTIy53oOk1VVN8IsDhSmiA9sYfTCG/Rm', 'whitedog1.jpeg', '::1', ' mirchi', '4879561254'),
-(19, 'user', 'user@gmail.com', '$2y$10$dATLBfAHlHqMYLYofHhs7.JNn0iEEhLcaGyonAMU30vMKg.7aRNDO', 'whitedog.jpeg', '::1', ' pakali', '8546921540');
+(1, 'demmo', 'demo@gmail.com', '$2y$10$8Cvj.t6hUB04Rfv56u5PUuzOzPBIUL5VreY/xfYRGVMI7EP1UdkAy', 'brownwhitecat.jpg', '::1', ' tarahara', '9854671526'),
+(2, 'hari', 'hari@gmail.com', '$2y$10$u/pa1VaHPOCY5V29MrPf9u.RWv3cuNbHLUXY8MUfExCDOxBAY4YMG', 'fish (2).jpg', '::1', ' basantpur', '9845418475');
 
 --
 -- Indexes for dumped tables
@@ -214,19 +253,30 @@ ALTER TABLE `categories`
 -- Indexes for table `orders_pending`
 --
 ALTER TABLE `orders_pending`
-  ADD PRIMARY KEY (`order_id`);
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `pet_id` (`pet_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `pets`
 --
 ALTER TABLE `pets`
-  ADD PRIMARY KEY (`pet_id`);
+  ADD PRIMARY KEY (`pet_id`),
+  ADD KEY `fk` (`breed_id`),
+  ADD KEY `fk_cat` (`category_id`);
 
 --
 -- Indexes for table `user_orders`
 --
 ALTER TABLE `user_orders`
-  ADD PRIMARY KEY (`order_id`);
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `uid_fk` (`user_id`);
+
+--
+-- Indexes for table `user_payments`
+--
+ALTER TABLE `user_payments`
+  ADD PRIMARY KEY (`payment_id`);
 
 --
 -- Indexes for table `user_table`
@@ -254,25 +304,61 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders_pending`
 --
 ALTER TABLE `orders_pending`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pets`
 --
 ALTER TABLE `pets`
-  MODIFY `pet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_orders`
 --
 ALTER TABLE `user_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `user_payments`
+--
+ALTER TABLE `user_payments`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cart_details`
+--
+ALTER TABLE `cart_details`
+  ADD CONSTRAINT `pid_fk` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`);
+
+--
+-- Constraints for table `orders_pending`
+--
+ALTER TABLE `orders_pending`
+  ADD CONSTRAINT `orders_pending_ibfk_1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `orders_pending_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pets`
+--
+ALTER TABLE `pets`
+  ADD CONSTRAINT `fk` FOREIGN KEY (`breed_id`) REFERENCES `breeds` (`breed_id`),
+  ADD CONSTRAINT `fk_cat` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
+
+--
+-- Constraints for table `user_orders`
+--
+ALTER TABLE `user_orders`
+  ADD CONSTRAINT `uid_fk` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

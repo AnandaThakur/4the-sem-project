@@ -63,7 +63,7 @@ if($order_status=='pending'){
 if($order_status=='Complete'){
     echo "<td>Paid</td>";
 }else{
-   echo" <td><a href='./users_area/confirm_payment.php?order_id=$order_id' class='text-light'>Confirm</a>
+   echo" <td><a href='../users_area/confirm_payment.php?order_id=$order_id' class='text-light'>Confirm</a>
    </td>
 </tr>";
 }
