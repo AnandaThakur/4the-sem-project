@@ -36,6 +36,7 @@ $int = (int)$user_id;
 $get_order_details="select * from `user_orders` where user_id=$int";
 $result_orders=mysqli_query($con,$get_order_details);
 while($row_orders=mysqli_fetch_assoc($result_orders)){
+    $number=$row_orders['order_id'];
     $order_id=$row_orders['order_id'];
     $amount_due=$row_orders['amount_due'];
     $amount_due=$row_orders['amount_due'];
@@ -50,7 +51,6 @@ if($order_status=='pending'){
 
 
     $order_date=$row_orders['order_date'];
-    $number=1;
     echo" <tr>
     <td>$number</td>
     <td>$amount_due</td>
@@ -67,7 +67,6 @@ if($order_status=='Complete'){
    </td>
 </tr>";
 }
-$number++;
 }
 
 ?>
