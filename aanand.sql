@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2024 at 03:52 PM
+-- Generation Time: Jun 20, 2024 at 07:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `aanand`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_table`
+--
+
+CREATE TABLE `admin_table` (
+  `admin_id` int(11) NOT NULL,
+  `admin_name` varchar(100) NOT NULL,
+  `admin_email` varchar(200) NOT NULL,
+  `admin_password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin_table`
+--
+
+INSERT INTO `admin_table` (`admin_id`, `admin_name`, `admin_email`, `admin_password`) VALUES
+(1, 'admin', 'admin@gmail.com', '$2y$10$H8KKdv06i5mkqHhR9TZwh.j/tv9z.bKh3zGpNv53fYMHa79ff9UFK');
 
 -- --------------------------------------------------------
 
@@ -41,9 +61,7 @@ INSERT INTO `breeds` (`breed_id`, `breed_title`) VALUES
 (2, 'Huskey'),
 (3, 'Others'),
 (4, 'Bull Dog'),
-(5, 'Local'),
-(6, 'Hybrid'),
-(7, 'new');
+(5, 'Local');
 
 -- --------------------------------------------------------
 
@@ -56,14 +74,6 @@ CREATE TABLE `cart_details` (
   `ip_address` varchar(255) NOT NULL,
   `quantity` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart_details`
---
-
-INSERT INTO `cart_details` (`pet_id`, `ip_address`, `quantity`) VALUES
-(1, '::1', 0),
-(2, '::1', 0);
 
 -- --------------------------------------------------------
 
@@ -86,9 +96,7 @@ INSERT INTO `categories` (`category_id`, `category_title`) VALUES
 (3, 'Bird'),
 (4, 'Fish'),
 (5, 'Reptiles'),
-(6, 'shiba'),
-(7, 'Guinea Pig'),
-(8, 'murga');
+(7, 'Guinea Pig');
 
 -- --------------------------------------------------------
 
@@ -110,11 +118,7 @@ CREATE TABLE `orders_pending` (
 --
 
 INSERT INTO `orders_pending` (`order_id`, `user_id`, `invoice_number`, `pet_id`, `quantity`, `order_status`) VALUES
-(1, 1, 1463026613, 4, 1, 'pending'),
-(2, 1, 291599742, 2, 1, 'pending'),
-(3, 1, 55962243, 1, 1, 'pending'),
-(4, 1, 930688335, 4, 1, 'pending'),
-(5, 1, 1196891058, 2, 1, 'pending');
+(1, 1, 1303256609, 1, 1, 'pending');
 
 -- --------------------------------------------------------
 
@@ -144,8 +148,7 @@ CREATE TABLE `pets` (
 INSERT INTO `pets` (`pet_id`, `pet_title`, `pet_description`, `pet_keywords`, `category_id`, `breed_id`, `pet_image1`, `pet_image2`, `pet_image3`, `pet_price`, `date`, `status`) VALUES
 (1, 'dog', 'good dog ', 'good dog loyal dog ', 1, 1, 'whiteorangedog.jpg', 'brownblackgerman.jpg', 'smallwhitedog.jpg', '1000', '2024-06-17 05:40:55', 'true'),
 (2, 'white dog', 'it is very charming dog.', 'dog white dog ', 1, 2, 'whitedog.jpeg', 'whitedog1.jpeg', 'whitedog3.jpeg', '2000', '2024-06-17 05:42:09', 'true'),
-(3, 'parrot', 'talking parrot', 'green white gray parrot', 3, 3, 'lightparrot.jpg', 'darkparrot.jpg', 'lightparrot.jpg', '3000', '2024-06-17 05:43:50', 'true'),
-(4, 'fish', 'colorful fishes small in size', 'fish colorful', 4, 3, 'fish.jpg', 'colorfish.jpg', 'goldenfish.jpg', '1500', '2024-06-17 05:45:02', 'true');
+(3, 'parrot', 'talking parrot', 'green white gray parrot', 3, 3, 'lightparrot.jpg', 'darkparrot.jpg', 'lightparrot.jpg', '3000', '2024-06-17 05:43:50', 'true');
 
 -- --------------------------------------------------------
 
@@ -168,14 +171,8 @@ CREATE TABLE `user_orders` (
 --
 
 INSERT INTO `user_orders` (`order_id`, `user_id`, `amount_due`, `invoice_number`, `total_pets`, `order_date`, `order_status`) VALUES
-(1, 1, 4500, 1898020122, 2, '2024-06-17 05:47:21', 'pending'),
-(2, 1, 3000, 1444982319, 1, '2024-06-17 15:35:55', 'pending'),
-(3, 2, 3000, 182739040, 1, '2024-06-18 13:09:34', 'complete'),
-(4, 1, 3500, 1463026613, 2, '2024-06-18 01:11:03', 'pending'),
-(5, 1, 2000, 291599742, 1, '2024-06-18 02:58:54', 'pending'),
-(6, 1, 1000, 55962243, 1, '2024-06-18 11:46:10', 'pending'),
-(7, 1, 1500, 930688335, 1, '2024-06-18 11:46:48', 'pending'),
-(8, 1, 3000, 1196891058, 2, '2024-06-18 13:38:35', 'pending');
+(1, 1, 1000, 1303256609, 1, '2024-06-20 15:21:49', 'complete'),
+(2, 1, 1500, 231474395, 1, '2024-06-20 02:15:01', 'pending');
 
 -- --------------------------------------------------------
 
@@ -197,10 +194,14 @@ CREATE TABLE `user_payments` (
 --
 
 INSERT INTO `user_payments` (`payment_id`, `order_id`, `invoice_number`, `amount`, `payment_mode`, `date`) VALUES
-(1, 3, 182739040, 3000, 'Cash on delivery', '2024-06-18 13:09:34'),
-(2, 3, 182739040, 3000, 'Khalti', '2024-06-18 13:09:51'),
-(3, 3, 182739040, 3000, 'Khalti', '2024-06-18 13:35:28'),
-(4, 3, 182739040, 3000, 'Khalti', '2024-06-18 13:36:20');
+(1, 1, 222771842, 7500, 'Khalti', '2024-06-18 14:27:05'),
+(2, 2, 834996248, 1000, 'Khalti', '2024-06-18 14:41:05'),
+(3, 3, 2108574912, 1500, 'Khalti', '2024-06-19 02:18:24'),
+(4, 3, 2108574912, 1500, 'Khalti', '2024-06-19 04:36:13'),
+(5, 3, 2108574912, 1500, 'Khalti', '2024-06-19 04:51:21'),
+(6, 8, 927100794, 3000, 'Cash on delivery', '2024-06-19 04:56:34'),
+(7, 3, 2108574912, 1500, 'Khalti', '2024-06-19 12:05:24'),
+(8, 1, 1303256609, 1000, 'Cash on delivery', '2024-06-20 15:21:49');
 
 -- --------------------------------------------------------
 
@@ -230,6 +231,12 @@ INSERT INTO `user_table` (`user_id`, `username`, `user_email`, `user_password`, 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin_table`
+--
+ALTER TABLE `admin_table`
+  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indexes for table `breeds`
@@ -289,6 +296,12 @@ ALTER TABLE `user_table`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_table`
+--
+ALTER TABLE `admin_table`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `breeds`
 --
 ALTER TABLE `breeds`
@@ -304,7 +317,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders_pending`
 --
 ALTER TABLE `orders_pending`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pets`
@@ -316,13 +329,13 @@ ALTER TABLE `pets`
 -- AUTO_INCREMENT for table `user_orders`
 --
 ALTER TABLE `user_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_payments`
 --
 ALTER TABLE `user_payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_table`
