@@ -46,7 +46,7 @@ session_start();
           <a class="nav-link" href="./users_area/user_registration.php">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contacts</a>
+          <a class="nav-link" href="contact.php">Contacts</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sup><?php cart_item();?></sup></a>
@@ -79,7 +79,7 @@ cart();
           </li>";
           }else{
             echo"<li class='nav-item'>
-            <a class='nav-link' href=''>Welcome ".$_SESSION['username']."</a>
+            <a class='nav-link' href='./profile_area/profile.php'>Welcome ".$_SESSION['username']."</a>
           </li>";
         }
 

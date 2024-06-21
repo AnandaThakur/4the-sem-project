@@ -21,7 +21,7 @@
     <h2 class="text-center mb-5">Admin Login</h2>
     <div class="row d-flex justify-content-center">
        <div class="col-lg-6 col-xl-5">
-        <img src="../images/bulldog.jpg" alt="Admin Registration" class="image-fluid">
+        <img src="../images/adminlogo1.jpg" alt="Admin Registration" class="image-fluid">
        </div>
        <div class="col-lg-6 col-xl-5">
       <form action="" method="post">
